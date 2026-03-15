@@ -1,0 +1,75 @@
+﻿name: "💡 Feature request"
+description: "Suggest an idea or improvement for LiveSubs."
+title: "[Feature] "
+labels:
+  - enhancement
+  - needs-triage
+assignees:
+  - Diva143V
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping improve **LiveSubs**!
+
+        Before opening a feature request, please:
+
+        - Check existing issues and discussions to avoid duplicates:
+          - Issues: https://github.com/Diva143V/LiveSubs/issues
+          - Discussions: https://github.com/Diva143V/LiveSubs/discussions
+
+  - type: textarea
+    id: problem-description
+    attributes:
+      label: "Is your feature request related to a problem?"
+      description: "Describe the problem you're facing. You can use any language you like (English preferred)."
+      placeholder: "I often run into this situation when using LiveSubs..."
+    validations:
+      required: false
+
+  - type: textarea
+    id: feature-description
+    attributes:
+      label: "Describe the feature you'd like"
+      description: "What would you like LiveSubs to do or support?"
+      placeholder: "I would like LiveSubs to..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: "Describe alternatives you've considered"
+      description: "Have you tried any workarounds or other tools?"
+      placeholder: "Right now I work around this by..."
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: "Additional context"
+      description: "Any mockups, screenshots, or detailed scenarios are helpful."
+      placeholder: "Add any other context or examples here."
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: "How important is this to you?"
+      options:
+        - "Nice to have"
+        - "Would make my life easier"
+        - "Blocking my use of LiveSubs"
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: confirmations
+    attributes:
+      label: "Checklist"
+      options:
+        - label: "I have searched existing [issues](https://github.com/Diva143V/LiveSubs/issues) and [discussions](https://github.com/Diva143V/LiveSubs/discussions) and did not find a duplicate request"
+          required: true
+        - label: "I understand this is a feature request, not a bug report"
+          required: true

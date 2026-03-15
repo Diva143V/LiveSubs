@@ -1,0 +1,91 @@
+﻿name: "🆘 Request help / support"
+description: "Ask for help using or configuring LiveSubs."
+title: "[Help] "
+labels:
+  - support
+  - question
+assignees:
+  - Diva143V
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Need help with **LiveSubs**? You're in the right place. 🙂
+
+        Before opening a help request, please:
+
+        - Check the README and any documentation in this repo.
+        - Search existing issues and discussions:
+          - Issues: https://github.com/Diva143V/LiveSubs/issues
+          - Discussions: https://github.com/Diva143V/LiveSubs/discussions
+
+  - type: textarea
+    id: help-topic
+    attributes:
+      label: "What do you need help with?"
+      description: "Describe your question or problem. You can use any language you like (English preferred)."
+      placeholder: "Example: I don't understand how to configure OpenAI; the overlay window is not showing; history logging is not working; etc."
+    validations:
+      required: true
+
+  - type: textarea
+    id: what-you-tried
+    attributes:
+      label: "What have you already tried?"
+      description: "Tell us what you've already done so we don't suggest the same things again."
+      placeholder: "Example: I tried changing X in settings, restarted LiveSubs, checked my API key, etc."
+    validations:
+      required: false
+
+  - type: textarea
+    id: steps-or-setup
+    attributes:
+      label: "Steps / setup details"
+      description: "If this looks like a configuration or behavior issue, please describe your setup and steps."
+      placeholder: |
+        1. Windows version and language
+        2. Live Captions source language
+        3. Translation API used (Google, OpenAI, etc.)
+        4. Any special hardware or VM setup
+    validations:
+      required: false
+
+  - type: input
+    id: livesubs-version
+    attributes:
+      label: "LiveSubs version"
+      description: "Version shown in the app (Info page) or GitHub release tag (e.g. v1.0.0)."
+      placeholder: "v1.0.0"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: windows-version
+    attributes:
+      label: "Windows version"
+      options:
+        - "Windows 11 24H2"
+        - "Windows 11 23H2"
+        - "Windows 11 (other)"
+        - "Windows 10 (with Live Captions)"
+        - "Other / not sure"
+    validations:
+      required: true
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: "Screenshots / screen recordings"
+      description: "If applicable, add screenshots or a short video that shows what you see."
+      placeholder: "Drag and drop images or videos here."
+
+  - type: checkboxes
+    id: confirmations
+    attributes:
+      label: "Checklist"
+      options:
+        - label: "I have checked the latest [README](https://github.com/Diva143V/LiveSubs) and any available documentation"
+          required: true
+        - label: "I have searched existing [issues](https://github.com/Diva143V/LiveSubs/issues) and [discussions](https://github.com/Diva143V/LiveSubs/discussions)"
+          required: true

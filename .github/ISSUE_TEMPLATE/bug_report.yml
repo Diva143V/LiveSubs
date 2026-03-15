@@ -1,0 +1,129 @@
+﻿name: "🐛 Bug report"
+description: "Something in LiveSubs is not working as expected."
+title: "[Bug] "
+labels:
+  - bug
+  - needs-triage
+assignees:
+  - Diva143V
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug in **LiveSubs**!
+
+        Before you open an issue, please:
+
+        - Make sure you are using the **latest release** of LiveSubs:  
+          https://github.com/Diva143V/LiveSubs/releases
+        - Check existing issues and discussions to avoid duplicates:  
+          - Issues: https://github.com/Diva143V/LiveSubs/issues  
+          - Discussions: https://github.com/Diva143V/LiveSubs/discussions  
+
+  - type: textarea
+    id: bug-description
+    attributes:
+      label: "Describe the bug"
+      description: "A clear and concise description of what the bug is. You can use any language you feel comfortable with, but English is preferred."
+      placeholder: "When I click X, I expect Y, but instead Z happens..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps-to-reproduce
+    attributes:
+      label: "Steps to reproduce"
+      description: "Step-by-step instructions so we can reproduce the issue."
+      placeholder: |
+        1. Go to '...'
+        2. Click on '...'
+        3. See error '...'
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: "Expected behavior"
+      description: "What did you expect to happen?"
+      placeholder: "I expected LiveSubs to..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual-behavior
+    attributes:
+      label: "Actual behavior"
+      description: "What actually happened instead?"
+      placeholder: "Instead, LiveSubs did..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: "Screenshots / screen recordings"
+      description: "If applicable, add screenshots or a short video to help explain your problem."
+      placeholder: "Drag and drop images or videos here."
+
+  - type: input
+    id: livesubs-version
+    attributes:
+      label: "LiveSubs version"
+      description: "Version shown in the app (Info page) or release tag (e.g. v1.0.0)."
+      placeholder: "v1.0.0"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: install-source
+    attributes:
+      label: "How did you install LiveSubs?"
+      options:
+        - "Downloaded EXE from GitHub Releases"
+        - "Built from source (debug)"
+        - "Built from source (release/publish)"
+        - "Other (describe below)"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: windows-version
+    attributes:
+      label: "Windows version"
+      options:
+        - "Windows 11 24H2"
+        - "Windows 11 23H2"
+        - "Windows 11 (other)"
+        - "Windows 10 (with Live Captions)"
+        - "Other / not sure"
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment-details
+    attributes:
+      label: "Environment details"
+      description: "Anything special about your setup? (GPU, audio devices, virtualization, etc.)"
+      placeholder: "e.g. Using external USB microphone, running inside a VM, etc."
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: "Logs / error messages"
+      description: "Paste any relevant error messages or logs. Please remove any sensitive data before posting."
+      render: shell
+
+  - type: checkboxes
+    id: confirmations
+    attributes:
+      label: "Checklist"
+      description: "Please confirm the following before submitting."
+      options:
+        - label: "I am using the latest version of LiveSubs from https://github.com/Diva143V/LiveSubs/releases"
+          required: true
+        - label: "I have searched existing [issues](https://github.com/Diva143V/LiveSubs/issues) and [discussions](https://github.com/Diva143V/LiveSubs/discussions) and did not find a duplicate"
+          required: true
+        - label: "I have provided enough information for someone else to reproduce this bug"
+          required: true

@@ -1,0 +1,262 @@
+<Window
+    x:Class="LIveSubs.OverlayWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:LIveSubs"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    Title="Overlay Window"
+    Width="650"
+    MinWidth="650"
+    AllowsTransparency="True"
+    Background="Transparent"
+    MouseEnter="Window_MouseEnter"
+    MouseLeave="Window_MouseLeave"
+    ResizeMode="CanResize"
+    ShowInTaskbar="False"
+    Topmost="True"
+    WindowStyle="None"
+    SizeToContent="Height"
+    mc:Ignorable="d">
+
+    <Window.Resources>
+        <Style x:Key="TransparentThumbStyle" TargetType="Thumb">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Opacity" Value="0" />
+        </Style>
+        <Storyboard x:Key="OverlayFadeIn">
+            <DoubleAnimation
+                Storyboard.TargetProperty="Opacity"
+                From="0.3" To="1.0"
+                Duration="0:0:0.25">
+                <DoubleAnimation.EasingFunction>
+                    <QuadraticEase EasingMode="EaseOut" />
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+        <Style x:Key="OverlayButtonStyle" TargetType="ui:Button">
+            <Setter Property="Appearance" Value="Transparent" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Margin" Value="0" />
+            <Setter Property="Padding" Value="4" />
+            <Setter Property="Width" Value="30" />
+            <Setter Property="Height" Value="30" />
+            <Setter Property="CornerRadius" Value="6" />
+            <Setter Property="Foreground" Value="Black" />
+        </Style>
+        <Style x:Key="OverlayIconBoxStyle" TargetType="Border">
+            <Setter Property="Background" Value="#30FFFFFF" />
+            <Setter Property="BorderBrush" Value="#60FFFFFF" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="6" />
+            <Setter Property="Padding" Value="1" />
+            <Setter Property="Margin" Value="2,0" />
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Border
+            x:Name="BorderBackground"
+            Margin="5"
+            Background="#80354F54"
+            CornerRadius="12"
+            BorderBrush="#15FFFFFF"
+            BorderThickness="1"
+            MouseLeftButtonDown="Border_MouseLeftButtonDown">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.Resources>
+                    <Style x:Key="CaptionBlockStyle" TargetType="TextBlock">
+                        <Setter Property="TextWrapping" Value="Wrap" />
+                        <Setter Property="VerticalAlignment" Value="Stretch" />
+                    </Style>
+                </Grid.Resources>
+
+                <ui:Card
+                    x:Name="TranslatedCaptionCard"
+                    Grid.Row="0"
+                    Margin="5,4,5,2"
+                    Padding="8"
+                    VerticalAlignment="Top"
+                    Background="Transparent"
+                    BorderThickness="0">
+                    <local:StrokeDecorator
+                        x:Name="TranslatedCaptionDecorator"
+                        Stroke="Black"
+                        StrokeThickness="0">
+                        <TextBlock
+                            x:Name="TranslatedCaption"
+                            FontSize="18"
+                            Style="{StaticResource CaptionBlockStyle}">
+                            <TextBlock.Triggers>
+                                <EventTrigger RoutedEvent="Binding.TargetUpdated">
+                                    <BeginStoryboard Storyboard="{StaticResource OverlayFadeIn}" />
+                                </EventTrigger>
+                            </TextBlock.Triggers>
+                            <Run x:Name="NoticePrefixRun" Text="{Binding OverlayNoticePrefix, UpdateSourceTrigger=PropertyChanged, NotifyOnTargetUpdated=True}" FontFamily="Consolas" />
+                            <Run x:Name="PreviousTranslationRun" Text="{Binding OverlayPreviousTranslation, Mode=OneWay}" />
+                            <Run x:Name="CurrentTranslationRun" Text="{Binding OverlayCurrentTranslation, UpdateSourceTrigger=PropertyChanged, NotifyOnTargetUpdated=True}" />
+                        </TextBlock>
+                    </local:StrokeDecorator>
+                </ui:Card>
+
+                <ui:Card
+                    x:Name="OriginalCaptionCard"
+                    Grid.Row="1"
+                    Margin="5,2,5,2"
+                    Padding="8"
+                    VerticalAlignment="Top"
+                    Background="Transparent"
+                    BorderThickness="0">
+                    <local:StrokeDecorator
+                        x:Name="OriginalCaptionDecorator"
+                        Stroke="Black"
+                        StrokeThickness="0">
+                        <TextBlock
+                            x:Name="OriginalCaption"
+                            FontSize="15"
+                            Style="{StaticResource CaptionBlockStyle}"
+                            Text="{Binding OverlayOriginalCaption, UpdateSourceTrigger=PropertyChanged}">
+                        </TextBlock>
+                    </local:StrokeDecorator>
+                </ui:Card>
+
+                <StackPanel
+                    x:Name="ControlPanel"
+                    Grid.Row="2"
+                    Margin="0,2,8,6"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Orientation="Horizontal"
+                    Visibility="Collapsed">
+                    <Border Style="{StaticResource OverlayIconBoxStyle}">
+                        <ui:Button
+                            x:Name="FontSizeIncrease"
+                            Style="{StaticResource OverlayButtonStyle}"
+                            Click="FontIncrease_Click"
+                            ToolTip="Font Size Increase">
+                            <ui:SymbolIcon Symbol="FontIncrease20" />
+                        </ui:Button>
+                    </Border>
+                    <Border Style="{StaticResource OverlayIconBoxStyle}">
+                        <ui:Button
+                            x:Name="FontSizeDecrease"
+                            Style="{StaticResource OverlayButtonStyle}"
+                            Click="FontDecrease_Click"
+                            ToolTip="Font Size Decrease">
+                            <ui:SymbolIcon Symbol="FontDecrease20" />
+                        </ui:Button>
+                    </Border>
+                    <Border Style="{StaticResource OverlayIconBoxStyle}">
+                        <ui:Button
+                            x:Name="FontStrokeIncrease"
+                            Style="{StaticResource OverlayButtonStyle}"
+                            Click="FontStrokeIncrease_Click"
+                            ToolTip="Font Stroke Increase">
+                            <ui:SymbolIcon Symbol="InkStroke20" />
+                        </ui:Button>
+                    </Border>
+                    <Border Style="{StaticResource OverlayIconBoxStyle}">
+                        <ui:Button
+                            x:Name="FontStrokeDecrease"
+                            Style="{StaticResource OverlayButtonStyle}"
+                            Click="FontStrokeDecrease_Click"
+                            ToolTip="Font Stroke Decrease">
+                            <ui:SymbolIcon Symbol="InkStrokeArrowDown20" />
+                        </ui:Button>
+                    </Border>
+                    <Border Style="{StaticResource OverlayIconBoxStyle}">
+                        <ui:Button
+                            x:Name="FontBold"
+                            Style="{StaticResource OverlayButtonStyle}"
+                            Click="FontBold_Click"
+                            ToolTip="Font Bold">
+                            <ui:SymbolIcon Symbol="TextBold16" />
+                        </ui:Button>
+                    </Border>
+                    <Border Style="{StaticResource OverlayIconBoxStyle}">
+                        <ui:Button
+                            x:Name="FontColorCycle"
+                            Style="{StaticResource OverlayButtonStyle}"
+                            Click="FontColorCycle_Click"
+                            ToolTip="Font Color">
+                            <ui:SymbolIcon Symbol="Color16" />
+                        </ui:Button>
+                    </Border>
+                    <Border Style="{StaticResource OverlayIconBoxStyle}" Margin="6,0,2,0">
+                        <ui:Button
+                            x:Name="OpacityIncrease"
+                            Style="{StaticResource OverlayButtonStyle}"
+                            Click="BackgroundOpacityIncrease_Click"
+                            ToolTip="Background Opacity Increase">
+                            <ui:SymbolIcon Symbol="ArrowAutofitUp20" />
+                        </ui:Button>
+                    </Border>
+                    <Border Style="{StaticResource OverlayIconBoxStyle}">
+                        <ui:Button
+                            x:Name="OpacityDecrease"
+                            Style="{StaticResource OverlayButtonStyle}"
+                            Click="BackgroundOpacityDecrease_Click"
+                            ToolTip="Background Opacity Decrease">
+                            <ui:SymbolIcon Symbol="ArrowAutofitDown20" />
+                        </ui:Button>
+                    </Border>
+                    <Border Style="{StaticResource OverlayIconBoxStyle}">
+                        <ui:Button
+                            x:Name="BackgroundColorCycle"
+                            Style="{StaticResource OverlayButtonStyle}"
+                            Click="BackgroundColorCycle_Click"
+                            ToolTip="Background Color">
+                            <ui:SymbolIcon Symbol="Color16" />
+                        </ui:Button>
+                    </Border>
+                    <Border Style="{StaticResource OverlayIconBoxStyle}" Margin="6,0,2,0">
+                        <ui:Button
+                            x:Name="OnlyModeButton"
+                            Style="{StaticResource OverlayButtonStyle}"
+                            Click="OnlyModeButton_Click"
+                            ToolTip="Show only subtitles or translations">
+                            <ui:SymbolIcon Symbol="PanelBottom20" />
+                        </ui:Button>
+                    </Border>
+                    <Border Style="{StaticResource OverlayIconBoxStyle}">
+                        <ui:Button
+                            x:Name="SwitchModeButton"
+                            Style="{StaticResource OverlayButtonStyle}"
+                            Click="SwitchModeButton_Click"
+                            ToolTip="Switch the order of subtitles and translations">
+                            <ui:SymbolIcon Symbol="ArrowSyncCircle20" />
+                        </ui:Button>
+                    </Border>
+                    <Border Style="{StaticResource OverlayIconBoxStyle}">
+                        <ui:Button
+                            x:Name="ClickThrough"
+                            Style="{StaticResource OverlayButtonStyle}"
+                            Click="ClickThrough_Click"
+                            ToolTip="Click Through">
+                            <ui:SymbolIcon Symbol="LockClosed16" />
+                        </ui:Button>
+                    </Border>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <Thumb x:Name="TopThumb" Height="10" HorizontalAlignment="Stretch" VerticalAlignment="Top" Cursor="SizeNS" DragDelta="TopThumb_OnDragDelta" Style="{StaticResource TransparentThumbStyle}" />
+        <Thumb x:Name="BottomThumb" Height="10" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Cursor="SizeNS" DragDelta="BottomThumb_OnDragDelta" Style="{StaticResource TransparentThumbStyle}" />
+        <Thumb x:Name="LeftThumb" Width="10" HorizontalAlignment="Left" VerticalAlignment="Stretch" Cursor="SizeWE" DragDelta="LeftThumb_OnDragDelta" Style="{StaticResource TransparentThumbStyle}" />
+        <Thumb x:Name="RightThumb" Width="10" HorizontalAlignment="Right" VerticalAlignment="Stretch" Cursor="SizeWE" DragDelta="RightThumb_OnDragDelta" Style="{StaticResource TransparentThumbStyle}" />
+        <Thumb x:Name="TopLeftThumb" Width="10" Height="10" HorizontalAlignment="Left" VerticalAlignment="Top" Cursor="SizeNWSE" DragDelta="TopLeftThumb_OnDragDelta" Style="{StaticResource TransparentThumbStyle}" />
+        <Thumb x:Name="TopRightThumb" Width="10" Height="10" HorizontalAlignment="Right" VerticalAlignment="Top" Cursor="SizeNESW" DragDelta="TopRightThumb_OnDragDelta" Style="{StaticResource TransparentThumbStyle}" />
+        <Thumb x:Name="BottomLeftThumb" Width="10" Height="10" HorizontalAlignment="Left" VerticalAlignment="Bottom" Cursor="SizeNESW" DragDelta="BottomLeftThumb_OnDragDelta" Style="{StaticResource TransparentThumbStyle}" />
+        <Thumb x:Name="BottomRightThumb" Width="10" Height="10" HorizontalAlignment="Right" VerticalAlignment="Bottom" Cursor="SizeNWSE" DragDelta="BottomRightThumb_OnDragDelta" Style="{StaticResource TransparentThumbStyle}" />
+    </Grid>
+</Window>
